@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+    <Import Project="Build_Common.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <OutputPath>$(OutputRelativePath)/$(AssemblyName)_$(Platform)_$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputRelativePath)/Obj_Exe/$(AssemblyName)_$(Platform)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)_$(Configuration)</IntermediateOutputPath>
+    <!-- The below settings do not work for WPF application, as they result
+         in Cannot find resource "app.xaml" or similar IOExceptions.
+         Since we do not have C++ executables we can live with the above settings for now.
+    <OutputPath>$(OutputRelativePath)/$(ProjectOrAssemblyName)_$(ShortPlatform)_$(Configuration)/</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputRelativePath)/Obj_Exe/$(ProjectOrAssemblyName)_$(ShortPlatform)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)_$(Configuration)/</IntermediateOutputPath>
+    <IntDir>$(IntermediateOutputPath)</IntDir>
+    <OutDir>$(OutputPath)</OutDir>
+    -->
+  </PropertyGroup>
+</Project>

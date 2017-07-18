@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDrawingAllocations.Common", "src\WpfDrawingAllocations.Common\WpfDrawingAllocations.Common.csproj", "{3D8495EA-D81C-49EF-BC78-E1FA0D008B25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDrawingAllocations.DrawingContextExample", "src\WpfDrawingAllocations.DrawingContextExample\WpfDrawingAllocations.DrawingContextExample.csproj", "{FB266B1A-CDE4-4019-834A-95F05C06732D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDrawingAllocations.ListBoxCanvasExample", "src\WpfDrawingAllocations.ListBoxCanvasExample\WpfDrawingAllocations.ListBoxCanvasExample.csproj", "{EDA5D838-F530-4B79-AFE9-4CC813491BF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D8495EA-D81C-49EF-BC78-E1FA0D008B25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D8495EA-D81C-49EF-BC78-E1FA0D008B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D8495EA-D81C-49EF-BC78-E1FA0D008B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D8495EA-D81C-49EF-BC78-E1FA0D008B25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB266B1A-CDE4-4019-834A-95F05C06732D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB266B1A-CDE4-4019-834A-95F05C06732D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB266B1A-CDE4-4019-834A-95F05C06732D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB266B1A-CDE4-4019-834A-95F05C06732D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDA5D838-F530-4B79-AFE9-4CC813491BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDA5D838-F530-4B79-AFE9-4CC813491BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDA5D838-F530-4B79-AFE9-4CC813491BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDA5D838-F530-4B79-AFE9-4CC813491BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

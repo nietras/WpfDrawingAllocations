@@ -1,0 +1,25 @@
+﻿<Window x:Class="WpfDrawingAllocations.DrawingContextExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfDrawingAllocations.DrawingContextExample"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModelDesign, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="1024" Width="1280" Background="DarkBlue"
+        WindowState="Maximized">
+    <Viewbox x:Name="ImageViewbox"  VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid x:Name="ImageGrid" SnapsToDevicePixels="True" ClipToBounds="True">
+            <!--<Grid.LayoutTransform>
+                <ScaleTransform x:Name="ImageTransform" CenterX="0" CenterY="0" 
+                                        ScaleX="{Binding ElementName=ImageScaleSlider, Path=Value}"
+                                        ScaleY="{Binding ElementName=ImageScaleSlider, Path=Value}" />
+            </Grid.LayoutTransform>-->
+            <Image x:Name="ImageSource" Source="{Binding ImageSource}" 
+                   RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" />
+            <local:DrawingVisualControl x:Name="DrawingVisualControl" Visual="{Binding DrawingVisual}" 
+                   RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" 
+                   IsHitTestVisible="False" />
+        </Grid>
+    </Viewbox>
+</Window>
