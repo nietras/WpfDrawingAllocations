@@ -28,6 +28,19 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
         Stopwatch m_stopwatchCurrentPosition = new Stopwatch();
 
         private readonly List<ItemResultView> m_items = new List<ItemResultView>();
+        static readonly object[] RowTopPositionsAsObjects = MakeRowTopPositionsBoxed();
+
+        static object[] MakeRowTopPositionsBoxed()
+        {
+            var ps = new object[RowCount];
+            for (int row = 0; row < RowCount; row++)
+            {
+                var top = (row + ExtraRowSpaceAboveAndBelowCount * 0.5) * DistanceBetweenRows;
+                // PERF: Top is boxed here, once for all items
+                ps[row] = top;
+            }
+            return ps;
+        }
 
         // Members for randomly generating data
         protected readonly ItemResult[] m_results = new ItemResult[RowCount];
@@ -155,6 +168,9 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
         }
         public void AddNewColumn(double position)
         {
+            var relativePosition = m_currentPosition - position;
+            var relativePositionBoxed = (object)relativePosition;
+
             var columnsCount = m_items.Count / RowCount;
             // If full we simply move
             if (columnsCount >= ColumnCount)
@@ -176,7 +192,7 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
 
                     var item = itemAfter;
                     item.Reset(position);
-                    item.UpdateRelativeHorizontalPosition(m_currentPosition);
+                    item.UpdateLeft(relativePositionBoxed);
                     //if (object.ReferenceEquals(m_selectedItem, item))
                     //{
                     //    SelectedItem = null;
@@ -190,11 +206,13 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
                     // TODO: Add static method for construction...
                     var item = new ItemResultView(position);
 
-                    var top = (row + ExtraRowSpaceAboveAndBelowCount * 0.5) * DistanceBetweenRows;
-                    Canvas.SetTop(item.Border, top);
+                    // PERF: Canvas.SetTop calls property set internally, so double is boxed, 
+                    //       we use a cache of boxed doubles for this then
+                    var top = RowTopPositionsAsObjects[row];
+                    item.Border.SetValue(Canvas.TopProperty, top);
+                    //Canvas.SetTop(item.Border, top); // Boxes
 
-                    item.UpdateRelativeHorizontalPosition(m_currentPosition);
-
+                    item.UpdateLeft(relativePositionBoxed);
 
                     //Border.HeightProperty = ,
                     //    ColumnHorizontalPosition_mm = position,
@@ -217,10 +235,27 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
                 var diff = newPosition - m_currentPosition;
                 CurrentPosition = newPosition;
                 // Update existing items...
-                for (int i = 0; i < m_items.Count; i++)
+                if (m_items.Count > 0)
                 {
-                    var item = m_items[i];
-                    item.UpdateRelativeHorizontalPosition(m_currentPosition);
+                    var firstItem = m_items[0];
+                    var itemPosition = firstItem.ColumnHorizontalPosition_mm;
+                    var relativePosition = m_currentPosition - itemPosition;
+                    // TODO: Mutate boxed position, reusing object
+                    //var boxedPosition = firstItem.Border.GetValue(Canvas.LeftProperty)
+                    var relativePositionBoxed = (object)relativePosition;
+                    for (int i = 0; i < m_items.Count; i++)
+                    {
+                        var item = m_items[i];
+                        if (item.ColumnHorizontalPosition_mm != itemPosition)
+                        {
+                            itemPosition = item.ColumnHorizontalPosition_mm;
+                            relativePosition = m_currentPosition - itemPosition;
+                            // TODO: Mutate boxed position of item!, reusing object
+                            //var boxedPosition = firstItem.Border.GetValue(Canvas.LeftProperty)
+                            relativePositionBoxed = (object)relativePosition;
+                        }
+                        item.UpdateLeft(relativePositionBoxed);
+                    }
                 }
             }
         }
@@ -291,7 +326,6 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
         public readonly Border Border = new Border();
         public readonly TextBlock TextBlock = new TextBlock();
         public double ColumnHorizontalPosition_mm = 0.0;
-        double m_relativeHorizontalPosition_mm = 0.0;
 
         public ItemResultView(double position)
         {
@@ -318,11 +352,16 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
             //BorderColor = Brushes.Transparent;
         }
 
-        public void UpdateRelativeHorizontalPosition(double newPosition)
+        //public void UpdateRelativeHorizontalPosition(double newPosition)
+        //{
+        //    m_relativeHorizontalPosition_mm = newPosition - ColumnHorizontalPosition_mm;
+        //    Canvas.SetLeft(Border, m_relativeHorizontalPosition_mm);
+        //    //RaisePropertyChanged(m_relativeHorizontalPositionChanged);
+        //}
+        public void UpdateLeft(object left)
         {
-            m_relativeHorizontalPosition_mm = newPosition - ColumnHorizontalPosition_mm;
-            Canvas.SetLeft(Border, m_relativeHorizontalPosition_mm);
-            //RaisePropertyChanged(m_relativeHorizontalPositionChanged);
+            Border.SetValue(Canvas.LeftProperty, left);
+            //Canvas.SetLeft(Border, m_relativeHorizontalPosition_mm);
         }
 
         internal void UpdateResult(ItemResult r)
