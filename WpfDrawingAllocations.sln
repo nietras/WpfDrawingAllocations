@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDrawingAllocations.Drawi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDrawingAllocations.ListBoxCanvasExample", "src\WpfDrawingAllocations.ListBoxCanvasExample\WpfDrawingAllocations.ListBoxCanvasExample.csproj", "{EDA5D838-F530-4B79-AFE9-4CC813491BF2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A1AD594E-18D5-4C12-98DC-DE350501F9C3}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
