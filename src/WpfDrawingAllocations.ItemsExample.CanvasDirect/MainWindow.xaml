@@ -12,7 +12,7 @@
             <RowDefinition Height="100" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" x:Name="Start" FontSize="48" Margin="10">Start</Button>
+        <Button Grid.Row="0" x:Name="Start" FontSize="48" Margin="10" Click="Start_Click">Start</Button>
         <Viewbox Grid.Row="1">
             <Canvas x:Name="Canvas" Background="Black"/>
         </Viewbox>

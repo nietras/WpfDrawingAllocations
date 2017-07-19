@@ -47,6 +47,49 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
             InitializeCanvas(canvas);
         }
 
+        public double CurrentPosition
+        {
+            get { return m_currentPosition; }
+            set { m_currentPosition = value; m_stopwatchCurrentPosition.Restart(); }
+        }
+
+        private void Start_Click(object sender, RoutedEventArgs e)
+        {
+            SetupNewPositionTimer();
+
+            SetupShutdownTimer();
+
+            Start.IsEnabled = false;
+        }
+
+        void SetupNewPositionTimer()
+        {
+            m_newPositionTimer.Interval = TimeSpan.FromMilliseconds(1.0 / 60.0);
+            m_newPositionTimer.Tick += (sender, e) => NewPosition();
+            m_newPositionTimer.Start();
+        }
+
+        void SetupShutdownTimer()
+        {
+            // Running for some seconds to give a profiling interval that is somewhat consistent and not full of initialization
+            m_shutdownTimer.Interval = TimeSpan.FromSeconds(20);
+            m_shutdownTimer.Tick += (sender, e) => Application.Current.MainWindow.Close();
+            m_shutdownTimer.Start();
+        }
+
+        public void NewPosition()
+        {
+            var seconds = m_stopwatchCurrentPosition.Elapsed.TotalSeconds;
+            var offset = VelocityPerSecond * seconds;
+            var newPosition = m_currentPosition + offset;
+            //Trace.WriteLine($"S:{seconds} O:{offset} C:{CurrentPosition} N:{newPosition}");
+            AddNewColumns(newPosition);
+
+            UpdatePosition(newPosition);
+
+            Canvas.InvalidateVisual();
+        }
+
         private void InitializeCanvas(Canvas canvas)
         {
             canvas.Width = CanvasWidth;
@@ -59,23 +102,7 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
                 canvas.Children.Add(item.Border);
             }
 
-            var b = new Border()
-            {
-                Background = Brushes.Red,
-                Width = 100,
-                Height = 200,
-            };
-            Canvas.SetLeft(b, 300);
-            Canvas.SetTop(b, 400);
-
-            canvas.Children.Add(b);
-
             canvas.InvalidateVisual();
-
-
-            //canvas.Children.Add
-            //Canvas.SetLeft()
-            //Canvas.SetTop()
         }
 
         private void InitializeItems()
@@ -164,9 +191,10 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
                     var item = new ItemResultView(position);
 
                     var top = (row + ExtraRowSpaceAboveAndBelowCount * 0.5) * DistanceBetweenRows;
+                    Canvas.SetTop(item.Border, top);
+
                     item.UpdateRelativeHorizontalPosition(m_currentPosition);
 
-                    Canvas.SetTop(item.Border, top);
 
                     //Border.HeightProperty = ,
                     //    ColumnHorizontalPosition_mm = position,
@@ -187,7 +215,7 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
             if (newPosition > m_currentPosition)
             {
                 var diff = newPosition - m_currentPosition;
-                m_currentPosition = newPosition;
+                CurrentPosition = newPosition;
                 // Update existing items...
                 for (int i = 0; i < m_items.Count; i++)
                 {
