@@ -29,7 +29,6 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
 
         private readonly List<ItemResultView> m_items = new List<ItemResultView>();
         static readonly object[] RowTopPositionsAsObjects = MakeRowTopPositionsBoxed();
-
         static object[] MakeRowTopPositionsBoxed()
         {
             var ps = new object[RowCount];
@@ -323,18 +322,37 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
     [DebuggerDisplay("{m_relativeHorizontalPosition_mm}")]
     public class ItemResultView
     {
+        // PERF: Can't make these static since UIElement can only be child of one at a time
+        private readonly TextBlock NoResultTextBlock = new TextBlock()
+        {
+            Text = ItemResultExtensions.NoResultText,
+            Foreground = ItemResultExtensions.NoResultColor,
+            HorizontalAlignment = HorizontalAlignment.Center,
+        };
+        // PERF: Can't make these static since UIElement can only be child of one at a time
+        private static readonly ItemResult[] ItemResults = ((ItemResult[])Enum.GetValues(typeof(ItemResult)));
+        private readonly Dictionary<ItemResult, TextBlock> m_resultToTextBlock =
+                ItemResults.ToDictionary(r => r,
+                r =>
+                {
+                    var tb = new TextBlock()
+                    {
+                        FontSize = 60 * 0.9,
+                        Text = r.ToText(),
+                        Foreground = r.ToBrush(),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                    };
+                    return tb;
+                });
+
         public readonly Border Border = new Border();
-        public readonly TextBlock TextBlock = new TextBlock();
         public double ColumnHorizontalPosition_mm = 0.0;
 
         public ItemResultView(double position)
         {
-            Border.Child = TextBlock;
             Border.BorderThickness = new Thickness(3);
             Border.Width = DistanceBetweenColumns;
             Border.Height = DistanceBetweenRows;
-            TextBlock.FontSize = 60 * 0.9;
-            TextBlock.HorizontalAlignment = HorizontalAlignment.Center;
 
             Reset(position);
         }
@@ -342,8 +360,7 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
         public void Reset(double columnPosition)
         {
             ColumnHorizontalPosition_mm = columnPosition;
-            TextBlock.Text = ItemResultExtensions.NoResultText;
-            TextBlock.Foreground = ItemResultExtensions.NoResultColor;
+            Border.Child = NoResultTextBlock;
             Border.Background = Brushes.Transparent;
             Border.BorderBrush = Brushes.Transparent;
             //DrawTextResult = NoResult;
@@ -366,8 +383,7 @@ namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
 
         internal void UpdateResult(ItemResult r)
         {
-            TextBlock.Text = r.ToText();
-            TextBlock.Foreground = r.ToBrush();
+            Border.Child = m_resultToTextBlock[r];
         }
 
         internal void UpdateState(bool bad)
