@@ -1,4 +1,4 @@
-﻿namespace WpfDrawingAllocations.ListBoxCanvasExample
+﻿namespace WpfDrawingAllocations.ItemsExample
 {
     public enum ItemResult
     {

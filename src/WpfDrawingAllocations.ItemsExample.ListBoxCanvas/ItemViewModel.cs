@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows.Media;
 using WpfDrawingAllocations.Common;
 
-namespace WpfDrawingAllocations.ListBoxCanvasExample
+namespace WpfDrawingAllocations.ItemsExample.ListBoxCanvas
 {
     public class ItemViewModel
         : NotifyPropertyChangedBase

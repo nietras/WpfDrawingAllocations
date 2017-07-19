@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDrawingAllocations.Items
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDrawingAllocations.OverlayExample.DrawingContext", "src\WpfDrawingAllocations.OverlayExample.DrawingContext\WpfDrawingAllocations.OverlayExample.DrawingContext.csproj", "{FB266B1A-CDE4-4019-834A-95F05C06732D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDrawingAllocations.ItemsExample.CanvasDirect", "src\WpfDrawingAllocations.ItemsExample.CanvasDirect\WpfDrawingAllocations.ItemsExample.CanvasDirect.csproj", "{35F64D0B-A96D-4803-9A05-EF30ABDB6FD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDrawingAllocations.ItemsExample", "src\WpfDrawingAllocations.ItemsExample\WpfDrawingAllocations.ItemsExample.csproj", "{107C101F-AE6C-4781-85E0-04707503A981}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +36,14 @@ Global
 		{FB266B1A-CDE4-4019-834A-95F05C06732D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB266B1A-CDE4-4019-834A-95F05C06732D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB266B1A-CDE4-4019-834A-95F05C06732D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35F64D0B-A96D-4803-9A05-EF30ABDB6FD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35F64D0B-A96D-4803-9A05-EF30ABDB6FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35F64D0B-A96D-4803-9A05-EF30ABDB6FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35F64D0B-A96D-4803-9A05-EF30ABDB6FD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{107C101F-AE6C-4781-85E0-04707503A981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{107C101F-AE6C-4781-85E0-04707503A981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{107C101F-AE6C-4781-85E0-04707503A981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{107C101F-AE6C-4781-85E0-04707503A981}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

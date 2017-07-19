@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Windows.Media;
 
-namespace WpfDrawingAllocations.ListBoxCanvasExample
+namespace WpfDrawingAllocations.ItemsExample
 {
     public static class ItemResultExtensions
     {
+        public const string NoResultText = "-";
+        public static readonly Brush NoResultColor = Brushes.Gray;
+
+        public static readonly Brush BadBackgroundColor = Brushes.Red;
+        public static readonly Brush BadBorderColor = CreateFreezedBrush(Color.FromRgb(128, 0, 0));
+
         public static string ToText(this ItemResult r)
         {
             // PERF: Only use literal strings/constants here (NO ToString())
@@ -48,6 +54,13 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
                 default:
                     throw new ArgumentException($"Unsupported {r}");
             }
+        }
+
+        private static Brush CreateFreezedBrush(Color color)
+        {
+            var b = new SolidColorBrush(color);
+            b.Freeze();
+            return b;
         }
     }
 }

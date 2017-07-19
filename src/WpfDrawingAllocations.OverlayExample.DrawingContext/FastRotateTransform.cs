@@ -4,7 +4,7 @@
 //using System.Windows.Media;
 //using System.Windows.Media.Composition;
 
-//namespace WpfDrawingAllocations.DrawingContextExample
+//namespace WpfDrawingAllocations.OverlayExample.DrawingContext
 //{
 //    // NOTE: Unfortunately can't make custom Transform due to the internal design of Transform!
 //    public class FastRotateTransform : Transform

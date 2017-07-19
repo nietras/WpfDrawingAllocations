@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace WpfDrawingAllocations.DrawingContextExample
+namespace WpfDrawingAllocations.OverlayExample.DrawingContext
 {
     public class DrawingVisualControl : FrameworkElement
     {

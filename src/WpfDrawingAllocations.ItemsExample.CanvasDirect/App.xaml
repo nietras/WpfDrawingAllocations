@@ -1,8 +1,9 @@
-﻿<Application x:Class="WpfDrawingAllocations.OverlayExample.DrawingContext.App"
+﻿<Application x:Class="WpfDrawingAllocations.ItemsExample.CanvasDirect.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfDrawingAllocations.OverlayExample.DrawingContext"
+             xmlns:local="clr-namespace:WpfDrawingAllocations.ItemsExample.CanvasDirect"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+         
     </Application.Resources>
 </Application>

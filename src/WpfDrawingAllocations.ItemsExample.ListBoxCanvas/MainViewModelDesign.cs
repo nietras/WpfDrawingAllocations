@@ -1,4 +1,4 @@
-﻿namespace WpfDrawingAllocations.ListBoxCanvasExample
+﻿namespace WpfDrawingAllocations.ItemsExample.ListBoxCanvas
 {
     public class MainViewModelDesign : MainViewModel
     {

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfDrawingAllocations.DrawingContextExample
+namespace WpfDrawingAllocations.OverlayExample.DrawingContext
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

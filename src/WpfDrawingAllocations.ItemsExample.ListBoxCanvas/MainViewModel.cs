@@ -6,19 +6,13 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WpfDrawingAllocations.Common;
+using static WpfDrawingAllocations.ItemsExample.ItemResultsContants;
 
-namespace WpfDrawingAllocations.ListBoxCanvasExample
+namespace WpfDrawingAllocations.ItemsExample.ListBoxCanvas
 {
     public class MainViewModel
         : NotifyPropertyChangedBase
     {
-        protected const int RowCount = 20;
-        protected const int ColumnCount = 60;
-        protected const double ExtraRowSpaceAboveAndBelowCount = 0.5;
-        protected const double DistanceBetweenRows = 100.0;
-        protected const double DistanceBetweenColumns = 75.0;
-        protected const double VelocityPerSecond = 10 * DistanceBetweenColumns;
-
         double m_currentPosition = 0.0;
         double m_latestColumnPosition = 0.0;
         Stopwatch m_stopwatchCurrentPosition = new Stopwatch();
@@ -36,9 +30,6 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
 
         public MainViewModel()
         {
-            CanvasWidth_mm = DistanceBetweenColumns * (ColumnCount + 1);
-            CanvasHeight_mm = DistanceBetweenRows * (RowCount + ExtraRowSpaceAboveAndBelowCount);
-
             InitialFill();
 
             m_startCommand = new ActionCommand(() =>
@@ -75,11 +66,8 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
         }
 
 
-        public double CanvasWidth_mm { get; }
-        public double CanvasHeight_mm { get; }
-
-        public double DistanceBetweenRows_mm => DistanceBetweenRows;
-        public double DistanceBetweenColumns_mm => DistanceBetweenColumns;
+        public double CanvasWidth_mm => CanvasWidth;
+        public double CanvasHeight_mm => CanvasHeight;
 
         public double CurrentPosition
         {
@@ -101,28 +89,28 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
             var columnEnd = ColumnCount;
             for (int i = 0; i < columnEnd; i++)
             {
-                var position = DistanceBetweenColumns_mm * i;
+                var position = DistanceBetweenColumns * i;
                 AddNewColumn(position);
 
                 if (i >= columnEnd / 2)
                 {
                     var results = m_results;
-                    RandomFillResults(results);
+                    m_random.RandomFillResults(results);
                     UpdateResults(position, results);
                 }
                 if (i >= (columnEnd * 3) / 4)
                 {
                     var states = m_states;
-                    RandomFillStates(states);
+                    m_random.RandomFillStates(states);
                     UpdateStates(position, states);
                     if (i % 2 == 0)
                     {
-                        ClearStates(states);
+                        ItemResultsHelper.ClearStates(states);
                         UpdateStates(position, states);
                     }
                 }
             }
-            UpdatePosition(columnEnd * DistanceBetweenColumns_mm);
+            UpdatePosition(columnEnd * DistanceBetweenColumns);
         }
 
         public void NewPosition()
@@ -148,10 +136,10 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
                 AddNewColumn(position);
 
                 // TODO: Move fill to a couple of columns later
-                RandomFillResults(m_results);
+                m_random.RandomFillResults(m_results);
                 UpdateResults(position, m_results);
 
-                RandomFillStates(m_states);
+                m_random.RandomFillStates(m_states);
                 UpdateStates(position, m_states);
             }
         }
@@ -162,15 +150,11 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
             {
                 var diff = newPosition - CurrentPosition;
                 CurrentPosition = newPosition;
-                // To throttle updating...
-                //if (diff > 400)
+                // Update existing items...
+                for (int i = 0; i < m_items.Count; i++)
                 {
-                    // Update existing items...
-                    for (int i = 0; i < m_items.Count; i++)
-                    {
-                        var item = m_items[i];
-                        item.UpdateRelativeHorizontalPosition(CurrentPosition);
-                    }
+                    var item = m_items[i];
+                    item.UpdateRelativeHorizontalPosition(CurrentPosition);
                 }
             }
         }
@@ -213,8 +197,8 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
                         // Below item could in the future be based on estimated item size
                         ItemHeight_mm = 60,
                         ItemWidth_mm = 40,
-                        PocketWidth_mm = DistanceBetweenColumns_mm,
-                        PocketHeight_mm = DistanceBetweenRows_mm,
+                        PocketWidth_mm = DistanceBetweenColumns,
+                        PocketHeight_mm = DistanceBetweenRows,
                     };
                     item.UpdateRelativeHorizontalPosition(CurrentPosition);
                     m_items.Add(item);
@@ -264,27 +248,6 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
                 }
             }
             return -1;
-        }
-
-        protected void RandomFillResults(ItemResult[] results)
-        {
-            for (int r = 0; r < results.Length; r++)
-            {
-                results[r] = (ItemResult)m_random.Next((int)ItemResult.F);
-            }
-        }
-
-        protected void RandomFillStates(bool[] states)
-        {
-            for (int r = 0; r < states.Length; r++)
-            {
-                states[r] = m_random.Next(4) == 0;
-            }
-        }
-
-        protected static void ClearStates(bool[] states)
-        {
-            Array.Clear(states, 0, states.Length);
         }
     }
 }

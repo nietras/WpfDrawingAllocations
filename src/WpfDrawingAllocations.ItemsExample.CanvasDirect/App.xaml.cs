@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace WpfDrawingAllocations.ItemsExample.ListBoxCanvas
+namespace WpfDrawingAllocations.ItemsExample.CanvasDirect
 {
     /// <summary>
     /// Interaction logic for App.xaml

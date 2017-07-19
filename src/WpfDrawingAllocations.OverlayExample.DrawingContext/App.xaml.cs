@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace WpfDrawingAllocations.DrawingContextExample
+namespace WpfDrawingAllocations.OverlayExample.DrawingContext
 {
     /// <summary>
     /// Interaction logic for App.xaml

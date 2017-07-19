@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfDrawingAllocations.Common;
 
-namespace WpfDrawingAllocations.DrawingContextExample
+namespace WpfDrawingAllocations.OverlayExample.DrawingContext
 {
     public class MainViewModel
         : NotifyPropertyChangedBase
