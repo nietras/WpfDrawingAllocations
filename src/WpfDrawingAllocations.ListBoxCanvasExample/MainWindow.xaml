@@ -8,7 +8,13 @@
         d:DataContext="{d:DesignInstance Type=local:MainViewModelDesign, IsDesignTimeCreatable=True}"
         Title="MainWindow" Height="1024" Width="1280" Background="DarkBlue"
         WindowState="Maximized">
-    <Viewbox SnapsToDevicePixels="True">
+    <Grid FocusManager.FocusedElement="{Binding ElementName=Start}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" x:Name="Start" FontSize="48" Margin="10" Command="{Binding StartCommand}">Start</Button>
+        <Viewbox Grid.Row="1" SnapsToDevicePixels="True">
         <ListBox x:Name="Items" ItemsSource="{Binding Items}" Background="Black" VirtualizingPanel.IsVirtualizing="True" SnapsToDevicePixels="True">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:ItemViewModel}">
@@ -36,4 +42,5 @@
             </ListBox.ItemsPanel>
         </ListBox>
     </Viewbox>
+    </Grid>
 </Window>

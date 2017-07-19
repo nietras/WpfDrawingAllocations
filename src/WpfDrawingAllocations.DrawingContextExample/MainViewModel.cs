@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -13,6 +14,7 @@ namespace WpfDrawingAllocations.DrawingContextExample
     {
         const int Width = 1280;
         const int Height = 1024;
+        private ICommand m_startCommand;
         WriteableBitmap m_writeableBitmap = new WriteableBitmap(Width, Height, 96, 96, PixelFormats.Gray8, BitmapPalettes.Gray256);
 
         readonly DrawingVisual m_drawingVisual = new DrawingVisual();
@@ -23,11 +25,22 @@ namespace WpfDrawingAllocations.DrawingContextExample
 
         public MainViewModel()
         {
-            SetupRedrawTimer();
+            m_startCommand = new ActionCommand(() =>
+            {
+                SetupRedrawTimer();
 
-            SetupShutdownTimer();
+                SetupShutdownTimer();
+
+                StartCommand = new ActionCommand(() => { }, false);
+            }, true);
 
             Draw();
+        }
+
+        public ICommand StartCommand
+        {
+            get { return m_startCommand; }
+            set { m_startCommand = value; this.NotifyOfCallerMemberChanged(); }
         }
 
         public ImageSource ImageSource => m_writeableBitmap;

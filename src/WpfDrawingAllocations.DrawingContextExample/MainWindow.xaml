@@ -8,18 +8,20 @@
         d:DataContext="{d:DesignInstance Type=local:MainViewModelDesign, IsDesignTimeCreatable=True}"
         Title="MainWindow" Height="1024" Width="1280" Background="DarkBlue"
         WindowState="Maximized">
-    <Viewbox x:Name="ImageViewbox"  VerticalAlignment="Center" HorizontalAlignment="Center">
-        <Grid x:Name="ImageGrid" SnapsToDevicePixels="True" ClipToBounds="True">
-            <!--<Grid.LayoutTransform>
-                <ScaleTransform x:Name="ImageTransform" CenterX="0" CenterY="0" 
-                                        ScaleX="{Binding ElementName=ImageScaleSlider, Path=Value}"
-                                        ScaleY="{Binding ElementName=ImageScaleSlider, Path=Value}" />
-            </Grid.LayoutTransform>-->
-            <Image x:Name="ImageSource" Source="{Binding ImageSource}" 
+    <Grid FocusManager.FocusedElement="{Binding ElementName=Start}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" x:Name="Start" FontSize="48" Margin="10" Command="{Binding StartCommand}">Start</Button>
+        <Viewbox Grid.Row="1" x:Name="ImageViewbox"  VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid x:Name="ImageGrid" SnapsToDevicePixels="True" ClipToBounds="True">
+                <Image x:Name="ImageSource" Source="{Binding ImageSource}" 
                    RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" />
-            <local:DrawingVisualControl x:Name="DrawingVisualControl" Visual="{Binding DrawingVisual}" 
+                <local:DrawingVisualControl x:Name="DrawingVisualControl" Visual="{Binding DrawingVisual}" 
                    RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" 
                    IsHitTestVisible="False" />
-        </Grid>
-    </Viewbox>
+            </Grid>
+        </Viewbox>
+    </Grid>
 </Window>

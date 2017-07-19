@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using WpfDrawingAllocations.Common;
 
@@ -22,6 +23,7 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
         double m_latestColumnPosition = 0.0;
         Stopwatch m_stopwatchCurrentPosition = new Stopwatch();
 
+        private ICommand m_startCommand;
         private ObservableCollection<ItemViewModel> m_items = new ObservableCollection<ItemViewModel>();
 
         // Members for randomly generating data
@@ -39,11 +41,22 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
 
             InitialFill();
 
-            SetupNewPositionTimer();
+            m_startCommand = new ActionCommand(() =>
+            {
+                SetupNewPositionTimer();
 
-            SetupShutdownTimer();
+                SetupShutdownTimer();
+
+                StartCommand = new ActionCommand(() => { }, false);
+            }, true);
 
             m_stopwatchCurrentPosition.Start();
+        }
+
+        public ICommand StartCommand
+        {
+            get { return m_startCommand; }
+            set { m_startCommand = value; this.NotifyOfCallerMemberChanged(); }
         }
 
         protected virtual void SetupNewPositionTimer()
