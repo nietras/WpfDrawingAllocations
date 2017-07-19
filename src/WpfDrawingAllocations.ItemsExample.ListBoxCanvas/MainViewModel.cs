@@ -24,7 +24,7 @@ namespace WpfDrawingAllocations.ListBoxCanvasExample
         Stopwatch m_stopwatchCurrentPosition = new Stopwatch();
 
         private ICommand m_startCommand;
-        private ObservableCollection<ItemViewModel> m_items = new ObservableCollection<ItemViewModel>();
+        private readonly ObservableCollection<ItemViewModel> m_items = new ObservableCollection<ItemViewModel>();
 
         // Members for randomly generating data
         protected readonly ItemResult[] m_results = new ItemResult[RowCount];
